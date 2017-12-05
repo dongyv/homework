@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xch.dzy.dao.UserPhoneLogDao">
+	<insert id="insert" parameterType="xch.dzy.model.UserPhoneLog">
+		insert into user_phone_log (phone_log,time,action,phone_number,uid)
+		values(#{phone_log},#{time},#{action},#{phone_number},#{uid})
+	</insert>
+</mapper>

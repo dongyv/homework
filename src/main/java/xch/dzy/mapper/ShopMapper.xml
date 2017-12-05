@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xch.dzy.dao.ShopDao">
+	<select id="findAll" resultType="xch.dzy.model.Shop">
+		select * from shop
+	</select>
+	<select id="findBySid" parameterType="int" resultType="xch.dzy.model.ShopGoods">
+		select * from shop_goods where id = #{sid}
+	</select>
+	<select id="findBySid1" parameterType="int" resultType="xch.dzy.model.Shop">
+		select * from shop where id = #{sid}
+	</select>
+	<select id="findByUid" parameterType="int" resultType="xch.dzy.model.Shop">
+		select * from shop where uid = #{uid}
+	</select>
+	<select id="findShopGoods" parameterType="int" resultType="xch.dzy.model.ShopGoods">
+		select s.name as shop_name,m.name as name,sg.*,m.* from shop_goods sg  join merchandise m on m.id=sg.mid join shop s on sg.sid=s.id where sg.sid = #{sid}
+	</select>
+	<insert id="save" parameterType="xch.dzy.model.Shop">
+		insert into shop (uid,name,addtime) values(#{uid},#{name},#{addtime})
+	</insert>
+	<select id="selectById" parameterType="int" resultType="xch.dzy.model.ShopGoods">
+		select * from shop_goods sg where id = #{id}
+	</select>
+	<update id="update_shopgoods" parameterType="xch.dzy.model.ShopGoods">
+		update shop_goods
+		<set>
+			xiaol = #{xiaol},
+			kucun = #{kucun}
+		</set>
+		where id = #{id}
+	</update>
+	<insert id="insertGoods" parameterType="xch.dzy.model.ShopGoods">
+		insert into shop_goods(sid,mid,price) values(#{sid},#{mid},#{price})
+	</insert>
+	<select id="findBysdId" resultType="int">
+		select id from shop_goods sg where sid=#{sid} and mid=#{mid}
+	</select>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xch.dzy.dao.MerchandiseDao">
+	<select id="findById" parameterType="int" resultType="xch.dzy.model.Merchandise">
+		select * from merchandise where id=#{uid}
+	</select>
+	<select id="selectByMid" parameterType="int" resultType="xch.dzy.model.Merchandise">
+		select m.* from merchandise m join shop_goods sg on m.id=sg.mid where sg.sid=#{sid}
+	</select>
+	<insert id="insert" parameterType="xch.dzy.model.Merchandise">	
+		<selectKey resultType="int" order="AFTER" keyProperty="id">
+          SELECT LAST_INSERT_ID()
+         </selectKey>
+         insert into merchandise (name,cid) values (#{name},#{cid})
+	</insert>
+</mapper>

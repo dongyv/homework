@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xch.dzy.dao.ShopCardDao">
+	<select id="shopCart"  resultType="xch.dzy.model.UserOrder">
+		select * from user_order where uid=#{id} and type=#{type}
+	</select>
+	<select id="shopCartGoodPrie" parameterType="int" resultType="xch.dzy.model.UserOrder">
+		select uo.*,sg.price from user_order uo left join shop_goods sg on uo.sdid = sg.id where uo.uid=#{id} and uo.type=2
+	</select>
+	<update id="update_UserOrder_type">
+		update user_order
+			 <set>type = #{type} </set>
+		where id = #{id}
+	</update>
+	<select id="selectById" parameterType="int" resultType="xch.dzy.model.UserOrder">
+		select * from user_order where id = #{id}
+	</select>
+	<delete id="delete" parameterType="int" >
+		delete from user_order where id = #{id}
+	</delete>
+	<update id="remove" parameterType="int">
+		update user_order
+			 <set>type = 1 </set>
+		where id = #{id}
+	</update>
+	<update id="remove_order" parameterType="int">
+		update user_order
+			 <set>type = 2,orderid=#{orderid},num=#{num} </set>
+		where id = #{id}
+	</update>
+	<insert id="insert_orderLog" parameterType="xch.dzy.model.UserOrderLog">
+		insert into user_order_log (orderid,addtime) values (#{orderid},#{addtime})
+	</insert>
+	<update id="update_orderLog_type">
+		update user_order_log
+			<set>
+				status = #{type}
+			</set>
+		where orderid=#{orderid}
+	</update>
+	<insert id="insertShopgoods">
+		insert into user_order(uid,sdid)values(#{uid},#{sdid})
+	</insert>
+</mapper>

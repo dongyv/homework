@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xch.dzy.dao.UserDao">
+    <select id="findEmailOrPhoneUnix" parameterType="string" resultType="xch.dzy.model.User" >
+        SELECT * FROM user WHERE email=#{emailoruser} or phone = #{emailoruser}
+    </select>
+    <insert id="insert" parameterType="xch.dzy.model.User" >
+     	<selectKey resultType="int" order="AFTER" keyProperty="id">
+          SELECT LAST_INSERT_ID()
+         </selectKey>
+    	insert into user(name,sex,birth,phone,email,password,paypassword)
+    	values(#{name},#{sex},#{birth},#{phone},#{email},#{password},#{paypassword})
+    </insert>
+    <select id="findUserAndPwd" resultType="xch.dzy.model.User">
+        SELECT * FROM user WHERE email=#{name} and password = #{password} or phone = #{name}
+    </select>
+    <select id="findUserById" parameterType="int" resultType="xch.dzy.model.User">
+    	select * from user where id = #{id}
+    </select>
+    <update id="update" parameterType="xch.dzy.model.User">
+    	update user 
+    		<set>
+    			<if test="name!=null">name=#{name},</if>
+    			<if test="sex!=null">sex=#{sex},</if>
+    			<if test="email!=null">email=#{email},</if>
+    			<if test="phone!=null">phone=#{phone},</if>
+    			<if test="nickname!=null">nickname=#{nickname}</if>
+    		</set>
+    	where id=#{id}
+    </update>
+    <update id="update_shopper" parameterType="int">
+    	update user 
+    		<set>	
+    			shopper=1
+    		</set>
+    	where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xch.dzy.dao.UserAccountDao">
+	<insert id="insert" parameterType="xch.dzy.model.UserAccount">
+		insert into user_account (uid) values (#{uid})
+	</insert>
+	<select id="selectById" parameterType="int" resultType="xch.dzy.model.UserAccount"> 
+		select * from user_account where id = #{id}
+	</select>
+	<update id="update" parameterType="xch.dzy.model.UserAccount">
+		update user_account 
+			<set>
+				use_money =  #{use_money},
+				no_use_money = #{no_use_money}
+			</set>
+		where uid=#{uid}
+	</update>
+	<select id="selectByUid" parameterType="int" resultType="xch.dzy.model.UserAccount">
+		select * from user_account where uid = #{uid}
+	</select>
+</mapper>
